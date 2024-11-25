@@ -4,11 +4,8 @@ document.getElementById("registrationForm").addEventListener("submit", async (ev
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
   
-    console.log("Form data:", data);  // Debug: Check form data
-  
     try {
-      // Hapa tu nimecall the whole url then kwa backend nikainstall "cors" package alafu kwa app.js nikaeka app.use(cors())
-      const response = await fetch("http:localhost:3000/api/register", {
+      const response = await fetch("/api/register", {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify(data),
@@ -21,9 +18,8 @@ document.getElementById("registrationForm").addEventListener("submit", async (ev
   
       // Check if the response is JSON
       const contentType = response.headers.get("Content-Type");
-      if (contentType && contentType.includes("application/json")) {
+      if (contentType?.includes("application/json")) {
         const result = await response.json();
-        console.log("Server response data:", result);  // Debug: Log response data
   
         // Handle the successful registration response
         alert(`Registration successful! Your ticket is at: ${result.ticketPath}`);

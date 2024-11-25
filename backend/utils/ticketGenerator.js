@@ -22,9 +22,6 @@ async function ticketGenerator({ name, email, churchName, phone, boardingStatus,
         doc.text(`Unique ID: ${uniqueID}`);
 
         doc.end();
-        // Hapa ulikuwa umeeka doc.on('finish') instead of writestream.on('finish')
-        // You're supposed to be tracking whether 'fs' imemaliza writing operation
-        // After umecall doc.end() Operations za PDF zimemaliza so that's why you track the writeStream
 
         // Resolve the promise by sending the file path to the ticket that has been generated
         writestream.on("finish", () => resolve(filePath));
