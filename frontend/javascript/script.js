@@ -20,14 +20,18 @@ document.getElementById("registrationForm").addEventListener("submit", async (ev
       const contentType = response.headers.get("Content-Type");
       if (contentType?.includes("application/json")) {
         const result = await response.json();
-  
-        // Handle the successful registration response
-        alert(`Registration successful! Your ticket is at: ${result.ticketPath}`);
+        if (result.message === "Registration successful!") {
+          // Handle the successful registration response
+          alert(`Registration successful! Your ticket has been sent to ${result.ticketPath}`);
+        } 
+        else if (result.message === "Email is already registered!") {
+          alert('Registration unsuccessful! Your Email is already registered in the system');
+        }
+        
       } else {
         throw new Error("Server did not return JSON");
       }
     } catch (error) {
-      console.log("Error during fetch:", error);
-      alert("An error occurred during registration.");
+      alert(`Error: ${error.message}`);
     }
   });

@@ -1,7 +1,7 @@
 import { Router } from "express";
 const router = Router();
 import db from "../db.js";
-import ticketGenerator from "../utils/ticketGenerator.js";
+import ticketGenerator from "../utils/ticketing.js";
 
 router.post("/", async (req, res) => {
     const { name, email, churchName, phone, boardingStatus, role } = req.body;
@@ -47,13 +47,15 @@ router.post("/", async (req, res) => {
     } catch (error) {
         // Let's say for some reason the operation fails midway
         await connection.rollback();
-        console.error("Error:", error);
+        // console.error("Error:", error);
 
+        // To implement better error handling
         if (error.code === "ER_DUP_ENTRY") {
             return res.status(400).json({ message: "Email is already registered!" });
         }
-
-        res.status(500).json({ message: "An error occurred!", error: error.message });
+        else {
+            res.status(500).json({ message: "An error occurred!", error: error.message });
+        }
     } finally {
         connection.release(); // Always release the connection
     }
