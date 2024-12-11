@@ -16,3 +16,6 @@ register2.js
 
 # Generated Tickets
 tickets/
+
+# Dev Ticketing
+ticketingdev.js
